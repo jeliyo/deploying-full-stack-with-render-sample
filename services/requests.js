@@ -1,6 +1,8 @@
 const fetch = require('node-fetch'); // import node-fetch (enables the fetch API to be used server-side)
 const { Pool } = require('pg'); // import node-postgres
 
+console.log('DATABASE_URL present:', Boolean(process.env.DATABASE_URL));
+
 const pool = new Pool({ // create connection to database
   connectionString: process.env.DATABASE_URL,	// use DATABASE_URL environment variable from Render app 
   ssl: {
