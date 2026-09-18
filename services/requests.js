@@ -28,7 +28,7 @@ const getAllActivities = (req, res) => {
 }
 
 const getSingleActivity = (req, res) => {
-  fetch('https://www.boredapi.com/api/activity') // fetch activity from bored API - https://www.boredapi.com/about
+  fetch('https://bored-api.appbrewery.com/random') // fetch activity from bored API mirror
     .then(data => data.json()) // return a promise containing the response
     .then(json => res.json(json)) // extract the JSON body content from the response (specifically the activity value) and sends it to the client
     .catch((err) => console.log(err)) // log errors to the console
@@ -46,9 +46,9 @@ const addActivityToDB = (req, res) => {
 
 const deleteAllActivites = (req, res) => {
   const removeString = 'DELETE FROM "my_activities"'; // delete all items in the 'my_activities' table
-  pool.query(removeString) // send query delete all items in the 'my_activities' table
-    .then(res.send('All activities cleared!')) // send confirmation to the browser
-    .catch(err => console.log(err));  
+  pool.query(removeString)
+    .then(() => res.send('All activities cleared!'))
+    .catch(err => { console.log(err); res.status(500).send('Delete failed'); });
 }
 
 module.exports = { getSingleActivity, addActivityToDB, getAllActivities, deleteAllActivites }
